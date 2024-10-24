@@ -194,19 +194,56 @@ class RequestsProvider extends ChangeNotifier {
     _selectedDTypeChoice = request.deliveryTypeCode;
     notifyListeners();
   }
+  //update function with update mutation
   //Update Request
-  Future<bool> updateRequest() async {
+  // Future<bool> updateRequest() async {
+  //   _isLoading = true;
+  //   notifyListeners();
+  //   try {
+  //     final updatedRequest = await requestRepo.UpdateRequestStatus(
+  //       status:'DELIVERED',
+  //       requestId:_currentRequest!.id,
+  //       token: CacheHelper().getData(key: 'token'),
+  //     );
+  //     if (updatedRequest != null) {
+  //       // Find and replace the existing request in the list with the updated request
+  //       final index = requests.indexWhere((r) => r.id == _currentRequest!.id);
+  //       if (index != -1) {
+  //         requests[index] = updatedRequest;
+  //       }
+  //       _isLoading = false;
+  //       notifyListeners();
+  //       return true;
+  //     } else {
+  //       _isLoading = false;
+  //       _errorMessage = "Failed to update request";
+  //       notifyListeners();
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     _isLoading = false;
+  //     _errorMessage = "Error: $error";
+  //     notifyListeners();
+  //     return false;
+  //   }
+  // }
+
+
+  //update function with save request mutation
+  Future<bool> updateRequest2({required int  requestId}) async {
     _isLoading = true;
     notifyListeners();
     try {
-      final updatedRequest = await requestRepo.UpdateRequestStatus(
-        status:'DELIVERED',
-        requestId:_currentRequest!.id,
-        token: CacheHelper().getData(key: 'token'),
-      );
+      final updatedRequest = await requestRepo.CreateRequest(
+          payeeName: payeeNameController.text,
+          typeCode:selectedRTypeChoice!,
+          deliveryTypeCode:selectedDTypeChoice!,
+          date: selectedDate,
+          notes:notesController.text,
+          token: CacheHelper().getData(key: 'token'));
       if (updatedRequest != null) {
         // Find and replace the existing request in the list with the updated request
-        final index = requests.indexWhere((r) => r.id == _currentRequest!.id);
+        final index = requests.indexWhere((r) => r.id == requestId);
         if (index != -1) {
           requests[index] = updatedRequest;
         }

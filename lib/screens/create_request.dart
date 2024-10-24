@@ -90,7 +90,8 @@ class CreateRequestScreen extends StatelessWidget {
                         bool success;
                         if (requestsProvider.currentRequest != null) {
                           // Update existing request
-                          success = await requestsProvider.updateRequest();
+                          success = await requestsProvider.
+                          updateRequest2(requestId: requestsProvider.currentRequest!.id);
                           showSnackBar(context: context, message: "Your Request Updated Successfully");
 
                         } else {

@@ -39,10 +39,12 @@ class RequestDetailsScreen extends StatelessWidget {
         },
             icon:const Icon(Icons.arrow_back,color: AppColors.gray,size: 20,)),
         actions: [
+          requestModel.status!='CANCELLED'?
           IconButton(onPressed:(){
             requestsProvider.fillRequestData(requestModel) ;
             navigate(context: context, route: AppRoutes.createRequestScreen);
-          }, icon:const Icon(Icons.edit,color: AppColors.gray,size: 20,))
+          }, icon:const Icon(Icons.edit,color: AppColors.gray,size: 20,)):
+          const SizedBox(),
         ],
       ),
       body: SingleChildScrollView(
