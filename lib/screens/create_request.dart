@@ -88,7 +88,8 @@ class CreateRequestScreen extends StatelessWidget {
                     onPressed: () async {
                       if (requestsProvider.createRequestKey.currentState!.validate()) {
                         bool success;
-                        if (requestsProvider.currentRequest != null) {
+                        if (requestsProvider.currentRequest != null &&
+                            requestsProvider.currentRequest!.status !='CANCELLED') {
                           // Update existing request
                           success = await requestsProvider.
                           updateRequest2(requestId: requestsProvider.currentRequest!.id);
@@ -99,12 +100,9 @@ class CreateRequestScreen extends StatelessWidget {
                           success = await requestsProvider.createRequest();
                           showSnackBar(context: context, message: "Your Request Saved Successfully");
                         }
-                        if(success){
-                          navigate(context: context, route: AppRoutes.allRequestsScreen);
-                          showSnackBar(context: context, message: "Done Successfully");
-                        }else{
-                          showSnackBar(context: context, message: requestsProvider.errorMessage ?? "Request failed");
-                        }
+                        success?
+                        navigate(context: context, route: AppRoutes.allRequestsScreen):
+                        showSnackBar(context: context, message: requestsProvider.errorMessage ?? "Request failed");
                       }
                     },
                     child:requestsProvider.isLoading?

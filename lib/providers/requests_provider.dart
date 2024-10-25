@@ -79,7 +79,6 @@ class RequestsProvider extends ChangeNotifier {
       );
       if (_customerRequestModel != null) {
         requests.add(_customerRequestModel!);
-        final customerId = _customerRequestModel!.customerId;
         _isLoading = false;
         notifyListeners();
         return true;
@@ -98,27 +97,26 @@ class RequestsProvider extends ChangeNotifier {
     }
   }
   //get requests
-  Future<void> fetchCustomerRequests({required int customerId,required String typeCode}) async{
+  Future<void> fetchCustomerRequests() async{
+    if (customerRequestModel == null) return;  // Safety check
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    try{
-      final fetchedRequests=await requestRepo.listCustomerRequests(
-          customerId: customerId,
-          typeCode: typeCode,
+    try {
+      final fetchedRequests = await requestRepo.listCustomerRequests(
+          customerId: customerRequestModel!.customerId,
+          typeCode: customerRequestModel!.typeCode,
           token: CacheHelper().getData(key: 'token'));
-      if(fetchedRequests!=null){
-        requests=fetchedRequests;
+      if (fetchedRequests != null) {
+        requests = fetchedRequests;
+        _errorMessage = null;
         notifyListeners();
-      }
-      else {
+      } else {
         _errorMessage = "Failed to fetch customer requests.";
       }
-    }
-    catch(e){
-      _isLoading=false;
-      _errorMessage="Error: $e";
-    } finally{
+    } catch (e) {
+      _errorMessage = "Error: $e";
+    } finally {
       _isLoading = false;
       notifyListeners();
     }
@@ -263,6 +261,7 @@ class RequestsProvider extends ChangeNotifier {
       return false;
     }
   }
+
 
 }
 

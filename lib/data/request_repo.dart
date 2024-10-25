@@ -78,7 +78,7 @@ class RequestRepo {
   }) async {
     final String listRequestsQuery = '''
     query ListCustomerRequests {
-      listCustomerRequests(input: { customerId: $customerId, typeCode: "$typeCode" }) {
+      listCustomerRequests(input: { customerId: $customerId, typeCode:$typeCode}) {
         data {
             id
             date

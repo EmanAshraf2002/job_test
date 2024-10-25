@@ -86,10 +86,16 @@ class _LoginScreenState extends State<LoginScreen> {
                    onPressed: () async{
                        if(authProvider.loginKey.currentState!.validate()){
                          bool loginSuccessful=await authProvider.Login();
-                         loginSuccessful?
-                         navigate(context: context, route: AppRoutes.createRequestScreen):
-                         showSnackBar(context:context,
-                           message:authProvider.errorMessage ?? "Login failed",);
+                         if(loginSuccessful){
+                           navigate(context: context, route: AppRoutes.createRequestScreen);
+                           showSnackBar(context:context,
+                           message:"Login Successfully",);
+                         }
+                        else{
+                           showSnackBar(context:context,
+                             message:authProvider.errorMessage ?? "Login failed",);
+                         }
+
                        }
                      },
                    child:authProvider.isLoading?

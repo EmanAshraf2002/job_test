@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:job_test/core/commons.dart';
+import 'package:job_test/core/routes/app_routes.dart';
 import 'package:job_test/core/utills/app_colors.dart';
 import 'package:job_test/core/utills/app_textStyls.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +24,9 @@ class CustomAlertDialog  extends StatelessWidget {
               } else {
                 print('No request found to cancel.');
               }
-              Navigator.pop(context);
+             showSnackBar(context: context, message: "saved Successfully");
+             navigate(context: context, route: AppRoutes.allRequestsScreen);
+
         },
           child: Text("confirm",
             style: AppTextStyles.font18.copyWith(color: AppColors.primary),)),

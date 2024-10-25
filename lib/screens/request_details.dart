@@ -21,7 +21,6 @@ class RequestDetailsScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final requestsProvider = Provider.of<RequestsProvider>(context);
-    final requestIndex = requestsProvider.requests.indexOf(requestModel)+ 1;
     DateTime dateTime = DateTime.parse(requestModel.date);
     String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
     String formattedTime = DateFormat('HH:mm').format(dateTime);
@@ -52,7 +51,7 @@ class RequestDetailsScreen extends StatelessWidget {
           padding:const EdgeInsets.all(18),
           child: Column(
             children: [
-              Text("Request $requestIndex",style:AppTextStyles.font16,),
+              Text("Request ${requestModel.id}",style:AppTextStyles.font16,),
               SizedBox(height: 22.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,

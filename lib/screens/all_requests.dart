@@ -16,52 +16,51 @@ class AllRequestsScreen extends StatefulWidget {
 }
 
 class _AllRequestsScreenState extends State<AllRequestsScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final request = Provider.of<RequestsProvider>(context, listen: false);
-  //   request.addListener(() {
-  //     request.fetchCustomerRequests(
-  //         customerId: request.customerRequestModel!.customerId,
-  //         typeCode: request.selectedRTypeChoice ?? '');
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      Provider.of<RequestsProvider>(context, listen: false)
+          .fetchCustomerRequests();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final request = Provider.of<RequestsProvider>(context, listen: false);
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.bgColor,
-          title: Text(
-            "Requests",
-            style: AppTextStyles.font20.copyWith(
-              color: AppColors.primary,
-            ),
+      appBar: AppBar(
+        backgroundColor: AppColors.bgColor,
+        title: Text(
+          "Requests",
+          style: AppTextStyles.font20.copyWith(
+            color: AppColors.primary,
           ),
-          leading: IconButton(
-              onPressed: () {
-                navigate(
-                    context: context, route: AppRoutes.createRequestScreen);
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: AppColors.gray,
-                size: 20,
-              )),
         ),
-        body: request.requests.isEmpty
-            ? const Center(child: Text("No requests yet"))
-            : ListView.builder(
-                itemCount: request.requests.length,
+        leading: IconButton(
+            onPressed: () {
+              navigate(
+                  context: context, route: AppRoutes.createRequestScreen);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.gray,
+              size: 20,
+            )),
+      ),
+      body: Consumer<RequestsProvider>(
+        builder: (context, requestProvider, child) {
+          return requestProvider.requests.isEmpty
+              ? const Center(child: Text("No requests yet"))
+              : ListView.builder(
+                itemCount: requestProvider.requests.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Column(
                       children: [
                         RequestItem(
-                          customerRequestModel: request.requests[index],
-                          index: index + 1,
+                          customerRequestModel: requestProvider.requests[index],
+                          index: requestProvider.requests[index].id,
                         ),
                         const Divider(
                           color: AppColors.black12,
@@ -69,10 +68,14 @@ class _AllRequestsScreenState extends State<AllRequestsScreen> {
                           height: 10,
                           endIndent: 10,
                           indent: 10,
-                        )
-                      ],
-                    ),
-                  );
-                }));
+                      ),
+                    ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }
