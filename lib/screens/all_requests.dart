@@ -22,6 +22,7 @@ class _AllRequestsScreenState extends State<AllRequestsScreen> {
     Future.microtask(() {
       Provider.of<RequestsProvider>(context, listen: false)
           .fetchCustomerRequests();
+      print("request number is ${Provider.of<RequestsProvider>(context,listen: false).requests.length}");
     });
   }
 

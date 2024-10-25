@@ -25,6 +25,7 @@ class CustomTextFormField  extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: AppColors.primary,
       controller: textController,
       validator: validator,
       obscureText: isPassword,
@@ -44,7 +45,7 @@ class CustomTextFormField  extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.r),
-          borderSide:const BorderSide(color:AppColors.primary),
+          borderSide:const BorderSide(color:AppColors.gray),
         ),
         errorBorder: OutlineInputBorder(
           borderSide:const BorderSide(color:AppColors.primary),

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         designSize:const Size(375, 812),
         child: MaterialApp(
         theme: ThemeData(
-         primaryColor: AppColors.primary ,
+         primarySwatch: Colors.red,
         ),
           debugShowCheckedModeBanner: false,
           initialRoute: AppRoutes.initialScreen,

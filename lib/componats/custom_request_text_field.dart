@@ -26,7 +26,7 @@ class RequestsTextField  extends StatelessWidget {
         ),
         suffixIcon: suffix,
         enabledBorder:const UnderlineInputBorder(
-          borderSide: BorderSide(color:AppColors.primary),
+          borderSide: BorderSide(color:AppColors.gray),
         ),
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color:AppColors.primary),

@@ -98,7 +98,6 @@ class RequestsProvider extends ChangeNotifier {
   }
   //get requests
   Future<void> fetchCustomerRequests() async{
-    if (customerRequestModel == null) return;  // Safety check
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -262,6 +261,34 @@ class RequestsProvider extends ChangeNotifier {
     }
   }
 
+
+  // Future<void> fetchAllCustomerRequests() async {
+  //   _isLoading = true;
+  //   _errorMessage = null;
+  //   notifyListeners();
+  //
+  //   List<String> typeCodes = ['PMNT', 'RTRN', 'MTRL']; // Replace with your actual type codes
+  //   try {
+  //     for (String typeCode in typeCodes) {
+  //       final fetchedRequests = await requestRepo.listCustomerRequests(
+  //         customerId:customerRequestModel!.customerId,
+  //         typeCode: typeCode,
+  //         token: CacheHelper().getData(key: 'token'),
+  //       );
+  //
+  //       if (fetchedRequests != null) {
+  //         requests.addAll(fetchedRequests);
+  //       }
+  //     }
+  //     notifyListeners();
+  //
+  //   } catch (e) {
+  //     _errorMessage = "Error: $e";
+  //   } finally {
+  //     _isLoading = false;
+  //     notifyListeners();
+  //   }
+  // }
 
 }
 
