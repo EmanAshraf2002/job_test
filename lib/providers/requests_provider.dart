@@ -98,25 +98,27 @@ class RequestsProvider extends ChangeNotifier {
     }
   }
   //get requests
-  Future<void> fetchCustomerRequests() async{
+  Future<void> fetchCustomerRequests({required int customerId, required String typeCode,}) async{
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
     try {
       final fetchedRequests = await requestRepo.listCustomerRequests(
-          customerId:_customerRequestModel!.customerId,
-          typeCode:selectedRTypeChoice!,
+          customerId:customerId,
+          typeCode:typeCode,
           token: CacheHelper().getData(key: 'token'));
       if (fetchedRequests != null && fetchedRequests.isNotEmpty) {
         for(var request in fetchedRequests){
+          if (!requests.any((existingRequest) => existingRequest.id == request.id)) {
             requests.add(request);
+          }
         }
         print("Fetched ${requests.length} requests");
-        notifyListeners();
       }
       else {
         _errorMessage = "Failed to fetch customer requests.";
       }
+      notifyListeners();
     } catch (e) {
       _errorMessage = "Error: $e";
     } finally {
@@ -196,7 +198,7 @@ class RequestsProvider extends ChangeNotifier {
   }
 
   //update function with save request mutation
-  Future<bool> updateRequest2({required int  requestId}) async {
+  Future<bool> updateRequest({required int  requestId}) async {
     _isLoading = true;
     notifyListeners();
     try {

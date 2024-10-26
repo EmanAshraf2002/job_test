@@ -21,12 +21,13 @@ class _AllRequestsScreenState extends State<AllRequestsScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<RequestsProvider>(context, listen: false)
-          .fetchCustomerRequests();
-      print("request numbers is ${Provider.of<RequestsProvider>(context,listen: false).requests.length}");
+      final requestsProvider = Provider.of<RequestsProvider>(context, listen: false);
+        requestsProvider.fetchCustomerRequests(
+            customerId:requestsProvider.customerRequestModel!.customerId,
+            typeCode:requestsProvider.selectedRTypeChoice! );
+      print("Fetched requests count: ${requestsProvider.requests.length}");
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
