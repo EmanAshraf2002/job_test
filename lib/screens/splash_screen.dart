@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigateToNewPage() async{
     await Future.delayed(const Duration(seconds:2)).then((value) async{
-      await CacheHelper().getData(key:'token')!=null?
+      await CacheHelper().getData(key:'token')==null?
       navigate(context: context, route: AppRoutes.loginScreen):
       navigate(context: context, route: AppRoutes.createRequestScreen) ;
 
