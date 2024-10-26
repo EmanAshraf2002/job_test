@@ -63,7 +63,8 @@ class RequestsProvider extends ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
 
-  List<CustomerRequestModel> requests = [];
+  List<CustomerRequestModel> requests=[] ;
+
   //Create Request
   Future<bool> createRequest() async {
     _isLoading = true;
@@ -103,14 +104,17 @@ class RequestsProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final fetchedRequests = await requestRepo.listCustomerRequests(
-          customerId: customerRequestModel!.customerId,
-          typeCode: customerRequestModel!.typeCode,
+          customerId:_customerRequestModel!.customerId,
+          typeCode:selectedRTypeChoice!,
           token: CacheHelper().getData(key: 'token'));
-      if (fetchedRequests != null) {
-        requests = fetchedRequests;
-        _errorMessage = null;
+      if (fetchedRequests != null && fetchedRequests.isNotEmpty) {
+        for(var request in fetchedRequests){
+            requests.add(request);
+        }
+        print("Fetched ${requests.length} requests");
         notifyListeners();
-      } else {
+      }
+      else {
         _errorMessage = "Failed to fetch customer requests.";
       }
     } catch (e) {
@@ -120,7 +124,6 @@ class RequestsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   String _selectedDate = '';
 
@@ -191,40 +194,6 @@ class RequestsProvider extends ChangeNotifier {
     _selectedDTypeChoice = request.deliveryTypeCode;
     notifyListeners();
   }
-  //update function with update mutation
-  //Update Request
-  // Future<bool> updateRequest() async {
-  //   _isLoading = true;
-  //   notifyListeners();
-  //   try {
-  //     final updatedRequest = await requestRepo.UpdateRequestStatus(
-  //       status:'DELIVERED',
-  //       requestId:_currentRequest!.id,
-  //       token: CacheHelper().getData(key: 'token'),
-  //     );
-  //     if (updatedRequest != null) {
-  //       // Find and replace the existing request in the list with the updated request
-  //       final index = requests.indexWhere((r) => r.id == _currentRequest!.id);
-  //       if (index != -1) {
-  //         requests[index] = updatedRequest;
-  //       }
-  //       _isLoading = false;
-  //       notifyListeners();
-  //       return true;
-  //     } else {
-  //       _isLoading = false;
-  //       _errorMessage = "Failed to update request";
-  //       notifyListeners();
-  //       return false;
-  //     }
-  //   } catch (error) {
-  //     _isLoading = false;
-  //     _errorMessage = "Error: $error";
-  //     notifyListeners();
-  //     return false;
-  //   }
-  // }
-
 
   //update function with save request mutation
   Future<bool> updateRequest2({required int  requestId}) async {
@@ -262,33 +231,6 @@ class RequestsProvider extends ChangeNotifier {
   }
 
 
-  // Future<void> fetchAllCustomerRequests() async {
-  //   _isLoading = true;
-  //   _errorMessage = null;
-  //   notifyListeners();
-  //
-  //   List<String> typeCodes = ['PMNT', 'RTRN', 'MTRL']; // Replace with your actual type codes
-  //   try {
-  //     for (String typeCode in typeCodes) {
-  //       final fetchedRequests = await requestRepo.listCustomerRequests(
-  //         customerId:customerRequestModel!.customerId,
-  //         typeCode: typeCode,
-  //         token: CacheHelper().getData(key: 'token'),
-  //       );
-  //
-  //       if (fetchedRequests != null) {
-  //         requests.addAll(fetchedRequests);
-  //       }
-  //     }
-  //     notifyListeners();
-  //
-  //   } catch (e) {
-  //     _errorMessage = "Error: $e";
-  //   } finally {
-  //     _isLoading = false;
-  //     notifyListeners();
-  //   }
-  // }
 
 }
 

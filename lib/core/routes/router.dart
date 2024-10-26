@@ -5,12 +5,15 @@ import 'package:job_test/screens/all_requests.dart';
 import 'package:job_test/screens/create_request.dart';
 import 'package:job_test/screens/login_page.dart';
 import 'package:job_test/screens/request_details.dart';
+import 'package:job_test/screens/splash_screen.dart';
 
 class AppRouter{
 
   static Route? onGenerateRoute(RouteSettings routeSettings){
     switch(routeSettings.name){
       case AppRoutes.initialScreen:
+        return MaterialPageRoute(builder: (context)=>const SplashScreen());
+      case AppRoutes.loginScreen:
         return MaterialPageRoute(builder: (context)=>const LoginScreen());
 
       case AppRoutes.createRequestScreen:

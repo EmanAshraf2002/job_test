@@ -121,6 +121,7 @@ class RequestRepo {
       } else {
         print('Requests fetched successfully');
         final List<dynamic> requestsList = data['data']['listCustomerRequests']['data'];
+        print('Fetched requests count: ${requestsList.length}');
         return requestsList.map((json) => CustomerRequestModel.fromJson(json))
             .toList();
       }

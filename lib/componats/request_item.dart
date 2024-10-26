@@ -3,9 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:job_test/core/commons.dart';
 import 'package:job_test/core/routes/app_routes.dart';
 import 'package:job_test/models/customer_request_model.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/requests_provider.dart';
 
 class RequestItem  extends StatelessWidget {
   const RequestItem({super.key, required this.customerRequestModel,required this.index});
